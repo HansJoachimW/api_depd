@@ -57,7 +57,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<dynamic> getCost(
       var courier, var origin, var destination, var weight) async {
-    ////
     dynamic costs;
     await MasterDataService.getCost(origin, destination, weight, courier)
         .then((value) {
@@ -83,7 +82,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Fee Calculator"),
+        title: const Text(
+          "Fee Calculator",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.brown.shade700,
         centerTitle: true,
       ),
       body: AbsorbPointer(
@@ -105,48 +110,70 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Flexible(
                                 flex: 1,
-                                child: DropdownButtonFormField(
-                                  items: const [
-                                    DropdownMenuItem(
-                                      value: 'jne',
-                                      child: Text('JNE'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'pos',
-                                      child: Text('Pos'),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'tiki',
-                                      child: Text('Tiki'),
-                                    ),
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      courierSelection = value as String;
-                                    });
-                                  },
-                                  value: courierSelection,
-                                  isDense: true,
-                                  isExpanded: false,
-                                  style: TextStyle(
-                                      color: Colors.brown.shade300,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                child: SizedBox(
+                                  child: DropdownButtonFormField(
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 'jne',
+                                        child: Text('JNE'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'pos',
+                                        child: Text('Pos'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'tiki',
+                                        child: Text('Tiki'),
+                                      ),
+                                      // gotta buy basic or pro for this
+                                      // DropdownMenuItem(
+                                      //   value: 'ide',
+                                      //   child: Text('ID Express'),
+                                      // ),
+                                      // DropdownMenuItem(
+                                      //   value: 'anteraja',
+                                      //   child: Text('AnterAja'),
+                                      // ),
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        courierSelection = value as String;
+                                      });
+                                    },
+                                    value: courierSelection,
+                                    isDense: true,
+                                    isExpanded: false,
+                                    style: TextStyle(
+                                        color: Colors.brown.shade300,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                              const SizedBox(width: 30),
+                              const SizedBox(width: 20),
                               Flexible(
-                                flex: 2,
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    labelText: 'Mass (in grams)',
+                                flex: 1,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.brown,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  keyboardType: TextInputType.number,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      weight = int.tryParse(value) ?? 0;
-                                    });
-                                  },
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 12.0, horizontal: 16.0),
+                                      labelText: 'Mass (in grams)',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        weight = int.tryParse(value) ?? 0;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
@@ -158,9 +185,9 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 "Origin",
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.brown),
                               ),
                             ),
                           ),
@@ -211,10 +238,13 @@ class _HomePageState extends State<HomePage> {
                                         icon: const Icon(Icons.arrow_drop_down),
                                         iconSize: 30,
                                         elevation: 4,
-                                        style: const TextStyle(
-                                            color: Colors.black),
+                                        style: TextStyle(
+                                            color: Colors.brown.shade900),
                                         hint: selectedCityOrigin == null
-                                            ? const Text('Select city')
+                                            ? const Text(
+                                                'Select city',
+                                                style: TextStyle(fontSize: 16),
+                                              )
                                             : Text(selectedCityOrigin.cityName),
                                         items: snapshot.data!
                                             .map<DropdownMenuItem<City>>(
@@ -244,9 +274,10 @@ class _HomePageState extends State<HomePage> {
                                         icon: const Icon(Icons.arrow_drop_down),
                                         iconSize: 30,
                                         elevation: 4,
-                                        style: const TextStyle(
-                                            color: Colors.black),
-                                        hint: const Text('Select city'),
+                                        style: TextStyle(
+                                            color: Colors.brown.shade900),
+                                        hint: const Text('Select city',
+                                            style: TextStyle(fontSize: 16)),
                                         items: const [],
                                         onChanged: null,
                                       ),
@@ -263,9 +294,9 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 "Destination",
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.brown),
                               ),
                             ),
                           ),
@@ -317,10 +348,11 @@ class _HomePageState extends State<HomePage> {
                                         icon: const Icon(Icons.arrow_drop_down),
                                         iconSize: 30,
                                         elevation: 4,
-                                        style: const TextStyle(
-                                            color: Colors.black),
+                                        style: TextStyle(
+                                            color: Colors.brown.shade900),
                                         hint: selectedCityDestination == null
-                                            ? const Text('Select city')
+                                            ? const Text('Select city',
+                                                style: TextStyle(fontSize: 16))
                                             : Text(selectedCityDestination
                                                 .cityName),
                                         items: snapshot.data!
@@ -351,9 +383,10 @@ class _HomePageState extends State<HomePage> {
                                         icon: const Icon(Icons.arrow_drop_down),
                                         iconSize: 30,
                                         elevation: 4,
-                                        style: const TextStyle(
-                                            color: Colors.black),
-                                        hint: const Text('Select city'),
+                                        style: TextStyle(
+                                            color: Colors.brown.shade900),
+                                        hint: const Text('Select city',
+                                            style: TextStyle(fontSize: 16)),
                                         items: const [],
                                         onChanged: null,
                                       ),
@@ -365,34 +398,46 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Flexible(
                             flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (cityIdDestination == null ||
-                                      cityIdOrigin == null ||
-                                      weight < 1) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                            'Fill in all fields to proceed.'),
-                                      ),
-                                    );
-                                  } else {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    setState(() async {
-                                      costData = await getCost(
-                                        courierSelection,
-                                        cityIdOrigin,
-                                        cityIdDestination,
-                                        weight,
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 16.0),
+                              child: Material(
+                                elevation: 5,
+                                shadowColor: Colors.grey.withOpacity(0.5),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (cityIdDestination == null ||
+                                        cityIdOrigin == null ||
+                                        weight < 1) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Fill in all fields to proceed.'),
+                                            behavior:
+                                                SnackBarBehavior.floating),
                                       );
-                                    });
-                                  }
-                                },
-                                child: const Text('Calculate costs'),
+                                    } else {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      setState(() async {
+                                        costData = await getCost(
+                                          courierSelection,
+                                          cityIdOrigin,
+                                          cityIdDestination,
+                                          weight,
+                                        );
+                                      });
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.brown.shade700,
+                                  ),
+                                  child: const Text(
+                                    'Calculate costs',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
